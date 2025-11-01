@@ -1,0 +1,54 @@
+module Base
+{
+    item ZedDmg_MuleZed
+    {
+        DisplayCategory = ZedDmg,
+        Type = Clothing,
+        ClothingItem = ZedDmg_MuleZed,
+        BodyLocation = ZedDmg,
+        WorldRender = FALSE,
+    }
+	item MuleZed
+    {
+        DisplayCategory = Clothing,
+        Type = Clothing,
+        ClothingItem = MuleZed,
+        BodyLocation = BodyCostume,
+        Icon = MuleZed,
+    }
+
+
+	item Crop_MuleZed_2
+    {
+        DisplayCategory = Clothing,
+        Type = Clothing,
+        ClothingItem = Crop_MuleZed_2,
+        BodyLocation = BodyCostume,
+        Icon = MuleZed,
+    }
+
+	item Crop_MuleZed_1
+    {
+        DisplayCategory = Bag,
+        WeightReduction	=	91,
+        Capacity	=	31,
+        Weight	=	3,
+        Type	=	Container,
+        DisplayName	= Crop_MuleZed_1,
+        Icon	=	MuleZed,
+        OpenSound   =   OpenBag,
+        CloseSound   =   CloseBag,
+        PutInSound   =   PutItemInBag,
+        BodyLocation = BodyCostume,
+        ClothingItem = Crop_MuleZed_1,
+        RunSpeedModifier = 0.98,	
+		CanBeEquipped = Back,
+        CanHaveHoles = false,
+        BloodLocation = Bag,
+        Insulation = 0.45,
+        WindResistance = 0.3,
+        WaterResistance = 0.35,
+		BiteDefense = 50,
+        ScratchDefense = 60,
+    }
+}

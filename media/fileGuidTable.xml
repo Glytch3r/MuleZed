@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fileGuidTable>
+	<files>
+		<path>media/clothing/clothingItems/ZedDmg_MuleZed.xml</path>
+		<guid>fbe1052d-6607-4a67-a400-44fcadbd3e81</guid>
+	</files>
+	<files>
+		<path>media/clothing/clothingItems/Crop_MuleZed_1.xml</path>
+		<guid>b1f1f9fc-bfdc-42f1-88fd-271f82742df8</guid>
+	</files>
+
+	<files>
+		<path>media/clothing/clothingItems/Crop_MuleZed_2.xml</path>
+		<guid>ee4a3de0-66bc-42b8-91e8-7253f441eae6</guid>
+	</files>
+	<files>
+		<path>media/clothing/clothingItems/MuleZed.xml</path>
+		<guid>e00c1977-d3da-432a-9c52-6f5423428d1f</guid>
+	</files>
+
+
+</fileGuidTable>

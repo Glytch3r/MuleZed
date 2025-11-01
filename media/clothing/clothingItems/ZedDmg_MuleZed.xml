@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+	<m_MaleModel></m_MaleModel>
+	<m_FemaleModel></m_FemaleModel>
+	<m_GUID>fbe1052d-6607-4a67-a400-44fcadbd3e81</m_GUID>
+	<m_Static>false</m_Static>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_AttachBone></m_AttachBone>
+
+
+	<m_Masks>3</m_Masks> <!-- LeftArm -->
+	<m_Masks>4</m_Masks> <!-- LeftHand --> 
+	<m_Masks>5</m_Masks> <!-- RightArm --> 
+    <m_Masks>6</m_Masks> <!-- RightHand --> 
+
+	<!-- <m_MasksFolder>media/textures/BodyDmg/Masks</m_MasksFolder> -->
+	<!-- <m_UnderlayMasksFolder>media/textures/BodyDmg/Masks</m_UnderlayMasksFolder> -->
+
+	<m_BaseTextures>BodyDmg\ZedDmg_MuleZed</m_BaseTextures>
+</clothingItem>

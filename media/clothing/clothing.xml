@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<outfitManager>
+	<m_MaleOutfits>
+		<m_Name>MuleZed</m_Name>
+		<m_Guid>80443f3f-3b08-4ee9-a123-42c034be6149</m_Guid>
+		<m_Top>false</m_Top>
+		<m_Pants>false</m_Pants>
+		<m_items>
+			<itemGUID>e00c1977-d3da-432a-9c52-6f5423428d1f</itemGUID>
+		</m_items>
+	</m_MaleOutfits>
+	<m_FemaleOutfits>
+		<m_Name>MuleZed</m_Name>
+		<m_Guid>79efa18d-28ea-4e5d-850d-7a648f557a9e</m_Guid>
+		<m_Top>false</m_Top>
+		<m_Pants>false</m_Pants>
+		<m_items>
+			<itemGUID>e00c1977-d3da-432a-9c52-6f5423428d1f</itemGUID>
+		</m_items>
+	</m_FemaleOutfits>
+</outfitManager>
