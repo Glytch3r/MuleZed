@@ -21,8 +21,6 @@
 ----- ▄▀▀ █  █▀  ▄  █▀▀▀█  ▄   █    █    █▀▀▀█    █  ▄   █ -----
 -----  ▀▀▀    ▀▀▀   ▀   ▀   ▀▀▀   ▀▀▀▀▀  ▀   ▀    ▀   ▀▀▀  -----
 ----------------------------------------------------------------
-
-MuleZed = MuleZed or {}
 MuleZed = MuleZed or {}
 
 MuleZed.sprList = {
@@ -30,19 +28,10 @@ MuleZed.sprList = {
     ["furniture_shelving_01_37"] = true,
 }
 
-function MuleZed.doSledge(obj)
-    if not obj then return end
-    if isClient() then
-        sledgeDestroy(obj)
-    else
-        local sq = obj:getSquare()
-        if sq then
-            sq:RemoveTileObject(obj)
-            sq:getSpecialObjects():remove(obj)
-            sq:getObjects():remove(obj)
-            sq:transmitRemoveItemFromSquare(obj)
-        end
-    end
+function MuleZed.getSprName(obj)
+    if not obj then return nil end
+    local spr = obj:getSprite()
+    return spr and spr:getName() or nil
 end
 
 function MuleZed.isMuleCont(obj)
@@ -50,12 +39,6 @@ function MuleZed.isMuleCont(obj)
     local sprName = MuleZed.getSprName(obj)
     if not sprName then return false end
     return MuleZed.sprList[sprName] or false
-end
-
-function MuleZed.getSprName(obj)
-    if not obj then return nil end
-    local spr = obj:getSprite()
-    return spr and spr:getName() or nil
 end
 
 function MuleZed.getContObj(sq)
@@ -71,8 +54,6 @@ function MuleZed.getContObj(sq)
     return nil
 end
 
-
----------------------------
 function MuleZed.findMuleObj(sq)
     local rad = 15
     local cell = getCell()
@@ -89,21 +70,18 @@ function MuleZed.findMuleObj(sq)
     return nil
 end
 
-
-function MuleZed.setMuleObj(sq)    
+function MuleZed.setMuleObj(sq)
     if not sq then return end
-
-    local sprName = "furniture_shelving_01_37"    
+    local sprName = "furniture_shelving_01_37"
     local obj = IsoThumpable.new(getCell(), sq, sprName, false, nil)
     if not obj then return end
     obj:setIsContainer(true)
-    local cont = obj:getContainer()
     sq:AddTileObject(obj)
-    if isClient() then
-        obj:transmitCompleteItemToServer()
-    end
+    obj:transmitCompleteItemToServer()
+    obj:transmitModData()
+    obj:transmitUpdatedSpriteToServer()
     ISInventoryPage.renderDirty = true
-    return obj, cont
+    return obj, obj:getContainer()
 end
 
 function MuleZed.transferItems(srcCont, destCont)
@@ -120,13 +98,38 @@ function MuleZed.transferItems(srcCont, destCont)
 end
 
 function MuleZed.stepCont(origSq, destSq)
-    if not origSq then return end
+    if not origSq or not destSq then return end
     local oldObj = MuleZed.getContObj(origSq)
     if not oldObj then return end
-    local oldCont = oldObj:getContainer()
+    if origSq == destSq then return end
+
     local newObj, newCont = MuleZed.setMuleObj(destSq)
-    MuleZed.transferItems(oldCont, newCont)
-    MuleZed.doSledge(oldObj)
+    if not newObj or not newCont then return end
+
+    local oldCont = oldObj:getContainer()
+    if oldCont and newCont then
+        MuleZed.transferItems(oldCont, newCont)
+    end
+
+    origSq:RemoveTileObject(oldObj)
+    oldObj:transmitCompleteItemToServer()
+    newObj:transmitCompleteItemToServer()
+    ISInventoryPage.renderDirty = true
+end
+
+function MuleZed.doSledge(obj)
+    if not obj then return end
+    if isClient() then
+        sledgeDestroy(obj)
+    else
+        local sq = obj:getSquare()
+        if sq then
+            sq:RemoveTileObject(obj)
+            sq:getSpecialObjects():remove(obj)
+            sq:getObjects():remove(obj)
+            sq:transmitRemoveItemFromSquare(obj)
+        end
+    end
 end
 
 function MuleZed.dead(zed)
@@ -153,4 +156,5 @@ function MuleZed.dead(zed)
         ISInventoryPage.renderDirty = true
     end
 end
+
 Events.OnCharacterDeath.Add(MuleZed.dead)
