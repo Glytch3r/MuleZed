@@ -127,7 +127,7 @@ Events.OnFillWorldObjectContextMenu.Add(MuleZed.Context)
 
 -----------------------               ---------------------------
 function MuleZed.doEnslave(zed)	
-	local sq = zed:ggetSquare()
+	local sq = zed:getSquare()
 	if not sq then return end
 	MuleZed.setMuleObj(sq)   
 	zed:addVisualDamage("ZedDmg_MuleZed");		
