@@ -91,8 +91,11 @@ end
 
 
 function MuleZed.setMuleObj(sq)    
+    if not sq then return end
+
     local sprName = "furniture_shelving_01_37"    
     local obj = IsoThumpable.new(getCell(), sq, sprName, false, nil)
+    if not obj then return end
     obj:setIsContainer(true)
     local cont = obj:getContainer()
     sq:AddTileObject(obj)

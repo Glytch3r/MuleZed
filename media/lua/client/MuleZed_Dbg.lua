@@ -112,7 +112,7 @@ local zed = dbgZed
 zed:addVisualDamage("ZedDmg_MuleZed");		
 zed:resetModel() 
 ]]
-
+--[[ 
 local zed = dbgZed
 local hv = zed:getHumanVisual()
 
@@ -124,3 +124,4 @@ print(e)
 
 hv:addBodyVisual(tshirt:getClothingItem())
 zed:resetModelNextFrame()
+ ]]

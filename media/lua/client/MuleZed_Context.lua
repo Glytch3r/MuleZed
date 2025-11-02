@@ -105,10 +105,16 @@ function MuleZed.Context(plNum, context, worldobjects)
 			zed:getModData()['AutoFollow'] = not zed:getModData()['AutoFollow']
 		end)
 	else
-		if zed:isBeingSteppedOn()  then
+		local csq = pl:getCurrentSquare() 
+		local zed2
+		if csq then
+			zed2 = csq:getZombie()
+		end
+		
+		if zed2 and zed2:isBeingSteppedOn()  then
 			local optTip = context:addOptionOnTop("Enslave", worldobjects, function()
-				if zed:isBeingSteppedOn()  then	
-					MuleZed.doEnslave(zed)
+				if zed2 and zed2:isBeingSteppedOn()  then	
+					MuleZed.doEnslave(zed2)
 					context:hideAndChildren()
 				end
 			end)
