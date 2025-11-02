@@ -72,6 +72,11 @@ function MuleZed.pause(seconds, callback)
     Events.OnTick.Add(tick)
 end
 
+function MuleZed.checkDist(pl, sq)
+	local dist = pl:DistTo(sq:getX(), sq:getY())
+    return math.floor(dist)
+end
+
 function MuleZed.isWithinRange(pl, zed, range)
     range = range or 6
 	local dist = pl:DistTo(zed:getX(), zed:getY())
@@ -79,7 +84,8 @@ function MuleZed.isWithinRange(pl, zed, range)
 end
 
 function MuleZed.isClosestPl(pl, zed)
-	if not MuleZed.isMuleZed(zed) then return end
+	if not pl or not zed then return false end    
+	if not MuleZed.isMuleZed(zed) then return false end
 	local plDist = MuleZed.checkDist(pl, zed)
 	local compare = round(zed:distToNearestCamCharacter())
 	if plDist == compare then
