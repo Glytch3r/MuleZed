@@ -44,7 +44,7 @@ function MuleZed.Context(plNum, context, worldobjects)
 		sq = clickedSquare
 	end
 	if not sq then return end
-
+--[[ 
 	if dbg then
 		context:addOptionOnTop('self testZedDmg', worldobjects, function()
 			pl:addVisualDamage("ZedDmg_MuleZed")
@@ -82,7 +82,7 @@ function MuleZed.Context(plNum, context, worldobjects)
 			end
 		end
 	end
-
+ ]]
 	local zed = sq:getZombie()
 	if not zed then return end
 

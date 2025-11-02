@@ -1,6 +1,6 @@
 {
     "projectColors.mainColor": "#25d489",
-    "window.title": "c:\\Users\\cmd\\Zomboid\\mods\\MuleZed",
+    "window.title": "MuleZed",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
