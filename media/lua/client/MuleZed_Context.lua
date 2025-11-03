@@ -96,7 +96,11 @@ function MuleZed.Context(plNum, context, worldobjects)
 		local opt = ISContextMenu:getNew(context)
 		context:addSubMenu(Main, opt)
 
-		opt:addOptionOnTop("Follow", worldobjects, function()
+		opt:addOptionOnTop("Call", worldobjects, function()
+			if MuleZed.mark then
+				MuleZed.mark:remove()
+				MuleZed.mark = nil
+			end
 			MuleZed.doFollow(zed, pl)
 		end)
 

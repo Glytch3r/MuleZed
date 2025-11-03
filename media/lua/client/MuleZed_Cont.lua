@@ -155,15 +155,15 @@ function MuleZed.stepCont(origSq, destSq)
 end
 
 function MuleZed.doSledge(obj)
-		if isClient() then
-			sledgeDestroy(obj)
-		else
-			local sq = obj:getSquare()
-			if sq then
-				sq:RemoveTileObject(obj);
-				sq:getSpecialObjects():remove(obj);
-				sq:getObjects():remove(obj);
-				sq:transmitRemoveItemFromSquare(obj)
-			end
-		end
-	end
+    if isClient() then
+        sledgeDestroy(obj)
+    else
+        local sq = obj:getSquare()
+        if sq then
+            sq:RemoveTileObject(obj);
+            sq:getSpecialObjects():remove(obj);
+            sq:getObjects():remove(obj);
+            sq:transmitRemoveItemFromSquare(obj)
+        end
+    end
+end
