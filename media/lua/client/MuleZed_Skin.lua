@@ -34,41 +34,10 @@ function MuleZed.doEnslave(zed)
    if MuleZed.isMuleZed(zed) then return end
 	local sq = zed:getSquare()
 	if not sq then return end	
+   MuleZed.addDogTag(zed)
 	zed:addVisualDamage("ZedDmg_MuleZed")
 	zed:resetModelNextFrame()
 end
-
-
-function MuleZed.isMuleZed(zed)
-   if not zed then return end
-    local vis = zed:getHumanVisual()
-   if not vis then return end
-    local bVis = vis:getBodyVisuals()
-   if not bVis then return end
-
-   for j = bVis:size() - 1, 0, -1 do
-      local item = bVis:get(j)
-      if item then
-         local fType = item:getItemType()
-         if fType and MuleZed.isMuleZedDmg(fType) then   
-            return true
-         end
-      end
-   end
-   return false
---[[ 
-   local fit = zed:getOutfitName() 
-   local isMule = false
-   if fit then
-      isMule = zed:getOutfitName() == "MuleZed"
-   end
-
-   return isMule 
-]]
-
-end
-
-
 
 
 function MuleZed.isMuleZedDmg(fType)
@@ -99,6 +68,25 @@ function MuleZed.clear(targ)
 end
 
 
+function MuleZed.isMuleZedSkin(zed)
+    if not zed then return false end
+    local vis = zed:getHumanVisual()
+    if vis then 
+      local bVis = vis:getBodyVisuals()
+      if bVis then 
+         for j = bVis:size() - 1, 0, -1 do
+            local item = bVis:get(j)
+            if item then
+               local fType = item:getItemType()
+               if fType and MuleZed.isMuleZedDmg(fType) then   
+                  return true
+               end
+            end
+         end
+      end   
+    end
+   return false
+end
 
 --[[ 
 

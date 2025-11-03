@@ -34,31 +34,32 @@ Events.OnHitZombie.Add(MuleZed.hit)
 
 
 function MuleZed.dead(zed)
-    if instanceof(zed, "IsoZombie") and MuleZed.isMuleZed(zed) then
-        local sq = zed:getSquare()
-        if not sq then return end
-        local obj = MuleZed.getContObj(sq)
-        if not obj then
-            obj = MuleZed.findMuleObj(sq)
-        end
-        if not obj then return end
-        local cont = obj:getContainer()
-        if cont then
-            for i = cont:getItems():size() - 1, 0, -1 do
-                local item = cont:getItems():get(i)
-                if item then
-                    if SandboxVars.MuleZed.isDropOnGround then
-                        sq:AddWorldInventoryItem(item, 0.5, 0.5, 0)
-                    else
-                        zed:getInventory():AddItem(item)
-                    end
-                    cont:Remove(item)
-                end
+   if instanceof(zed, "IsoZombie") and MuleZed.isMuleZed(zed) then
+      MuleZed.removeDogTag(zed)
+      local sq = zed:getSquare()
+      if not sq then return end
+      local obj = MuleZed.getContObj(sq)
+      if not obj then
+         obj = MuleZed.findMuleObj(sq)
+      end
+      if not obj then return end
+      local cont = obj:getContainer()
+      if cont then
+         for i = cont:getItems():size() - 1, 0, -1 do
+            local item = cont:getItems():get(i)
+            if item then
+               if SandboxVars.MuleZed.isDropOnGround then
+                  sq:AddWorldInventoryItem(item, 0.5, 0.5, 0)
+               else
+                  zed:getInventory():AddItem(item)
+               end
+               cont:Remove(item)
             end
-        end
-        MuleZed.doSledge(obj)
-        ISInventoryPage.renderDirty = true
-    end
+         end
+      end
+      MuleZed.doSledge(obj)
+      ISInventoryPage.renderDirty = true
+   end
 end
 
 Events.OnCharacterDeath.Remove(MuleZed.dead)

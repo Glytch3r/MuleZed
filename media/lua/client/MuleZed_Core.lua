@@ -78,6 +78,11 @@ function MuleZed.coreFunc(zed)
     if not zed:isUseless() then
         zed:setUseless(true)
     end
+  
+    if not MuleZed.isMuleZedSkin(zed) and MuleZed.getDogTag(zed) then    
+        zed:addVisualDamage("ZedDmg_MuleZed")
+        zed:resetModelNextFrame()
+    end
     
     MuleZed.stepContForZed(zed)
     MuleZed.doBehavior(zed)
