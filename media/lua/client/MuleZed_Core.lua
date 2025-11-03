@@ -78,8 +78,7 @@ function MuleZed.coreFunc(zed)
     if not zed:isUseless() then
         zed:setUseless(true)
     end
-    local sq = zed:getSquare()
-    if not sq then return end
+
     MuleZed.stepContForZed(zed)
     MuleZed.doBehavior(zed)
 

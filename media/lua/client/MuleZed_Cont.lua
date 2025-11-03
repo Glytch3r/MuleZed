@@ -24,7 +24,7 @@
 MuleZed = MuleZed or {}
 
 MuleZed.sprList = {
-    ["underground_01_8"] = true,
+    ["fixtures_railings_01_119"] = true,
 }
 
 function MuleZed.getSprName(obj)
@@ -37,7 +37,13 @@ function MuleZed.isMuleCont(obj)
     if not obj then return false end
     local sprName = MuleZed.getSprName(obj)
     if not sprName then return false end
-    return MuleZed.sprList[sprName] or false
+    local cont = obj:getContainer()
+    if cont ~= nil then
+        if cont:getType() == "MuleZed" then
+            return MuleZed.sprList[sprName]
+        end
+    end
+    return false
 end
 
 function MuleZed.getContObj(sq)
@@ -68,14 +74,14 @@ function MuleZed.findMuleObj(sq)
     end
     return nil
 end
-
 function MuleZed.setMuleObj(sq)
     if not sq then return end
-    local sprName = "underground_01_8"
+    local sprName = "fixtures_railings_01_119"
     local obj = IsoThumpable.new(getCell(), sq, sprName, false, nil)
     if not obj then return end
     obj:setIsContainer(true)
     sq:AddTileObject(obj)
+    obj:getContainer():setType("MuleZed")
     if isClient() then
         obj:transmitCompleteItemToServer();
     end
@@ -100,22 +106,25 @@ end
 function MuleZed.stepContForZed(zed)
     if not zed then return end
     local sq = zed:getSquare()
+
     if not sq then return end
-
+    if MuleZed.getContObj(sq) ~= nil then return end
+    
     local oldObj = MuleZed.findMuleObj(sq)
-    if not oldObj then return end
+    if not oldObj then 
+        MuleZed.setMuleObj(sq)
+        return 
+    end
 
-    local oldSq = oldObj:getSquare()
-    if not oldSq or oldSq == sq then return end
 
     local oldCont = oldObj:getContainer()
+    if not oldCont then return end
+    
     local newObj, newCont = MuleZed.setMuleObj(sq)
     if not newObj or not newCont then return end
 
-    if oldCont then
-        MuleZed.transferItems(oldCont, newCont)
-        MuleZed.doSledge(oldObj)
-    end
+    MuleZed.transferItems(oldCont, newCont)
+    MuleZed.doSledge(oldObj)
 
    
 end
