@@ -82,8 +82,14 @@ function MuleZed.setMuleObj(sq)
     obj:setIsContainer(true)
     sq:AddTileObject(obj)
     obj:getContainer():setType("MuleZed")
+    obj:setAlpha(0.0)
+    --obj:setTargetAlpha(0.0)
+   -- obj:setAlphaToTarget()
+
     if isClient() then
         obj:transmitCompleteItemToServer();
+        obj:transmitUpdatedSpriteToServer()
+        obj:transmitUpdatedSpriteToClients()
     end
     ISInventoryPage.renderDirty = true
     return obj, obj:getContainer()

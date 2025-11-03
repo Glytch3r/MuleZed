@@ -20,10 +20,12 @@ MuleZed = MuleZed or {}
 
 function MuleZed.hit(zed, pl, bodyPartType, wpn)
 	if zed and MuleZed.isMuleZed(zed) then
-        local immortal = SandboxVars.MuleZed.immortal or true 
-        zed:setImmortalTutorialZombie(immortal)
-        zed:setNoDamage(immortal)
-        zed:setAvoidDamage(immortal)
+      local immortal = SandboxVars.MuleZed.immortal
+      if immortal then
+         zed:setImmortalTutorialZombie(immortal)
+         zed:setNoDamage(immortal)
+         zed:setAvoidDamage(immortal)
+      end
 	end
 end
 Events.OnHitZombie.Remove(MuleZed.hit)
