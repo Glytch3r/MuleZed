@@ -1,5 +1,10 @@
 MuleZed = MuleZed or {}
 MuleZed.mark = nil
+function MuleZed.isPlayerInVehicle(pl)
+    pl = pl or getPlayer()
+    if not pl then return false end
+    return pl:getVehicle() ~= nil
+end
 
 function MuleZed.doBehavior(zed)
     if not zed then return end
@@ -8,7 +13,10 @@ function MuleZed.doBehavior(zed)
     local pl = getPlayer()
     if not pl then return end
     if MuleZed.isClosestPl(pl, zed) then
-        if pl:isMoving() then
+        if pl:isSprinting() or MuleZed.isPlayerInVehicle(pl) then
+            md.AutoFollow = nil
+        end
+        if pl:isMoving() then    
             MuleZed.stopMove(zed)
         else       
             MuleZed.doFollow(zed, pl)

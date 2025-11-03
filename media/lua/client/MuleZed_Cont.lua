@@ -24,7 +24,7 @@
 MuleZed = MuleZed or {}
 
 MuleZed.sprList = {
-    ["fixtures_railings_01_119"] = true,
+    ["walls_garage_01_54"] = true,
 }
 
 function MuleZed.getSprName(obj)
@@ -76,7 +76,7 @@ function MuleZed.findMuleObj(sq)
 end
 function MuleZed.setMuleObj(sq)
     if not sq then return end
-    local sprName = "fixtures_railings_01_119"
+    local sprName = "walls_garage_01_54"
     local obj = IsoThumpable.new(getCell(), sq, sprName, false, nil)
     if not obj then return end
     obj:setIsContainer(true)

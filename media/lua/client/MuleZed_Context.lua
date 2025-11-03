@@ -44,8 +44,8 @@ function MuleZed.Context(plNum, context, worldobjects)
 		sq = clickedSquare
 	end
 	if not sq then return end
-
-
+	if MuleZed.isPlayerInVehicle(pl)  then return end
+	
 
 
 --[[ 
