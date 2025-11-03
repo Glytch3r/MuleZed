@@ -38,7 +38,6 @@ function MuleZed.doBehavior(zed)
         MuleZed.doFollow(zed, pl)
     end
 end
- 
 function MuleZed.doFollow(zed, pl)
     pl = pl or getPlayer()
     if not pl or not zed then return end
@@ -61,6 +60,10 @@ function MuleZed.doFollow(zed, pl)
         zed:getPathFindBehavior2():cancel()
         zed:setVariable("bPathfind", false)
         zed:setVariable("bMoving", false)
+    end
+
+    if distSq > 15 then
+        zed:getModData()['AutoFollow'] = nil        
     end
 end
 
