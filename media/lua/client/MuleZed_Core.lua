@@ -78,14 +78,14 @@ function MuleZed.coreFunc(zed)
     if not zed:isUseless() then
         zed:setUseless(true)
     end
-
+    
     MuleZed.stepContForZed(zed)
     MuleZed.doBehavior(zed)
 
-    if zed:isTargetVisible() then
+--[[     if zed:isTargetVisible() then
         zed:getModData()['AutoFollow'] = nil
     end
-
+ ]]
 end
 
 Events.OnZombieUpdate.Remove(MuleZed.coreFunc)

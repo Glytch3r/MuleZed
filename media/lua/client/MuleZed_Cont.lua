@@ -106,7 +106,7 @@ end
 function MuleZed.stepContForZed(zed)
     if not zed then return end
     local sq = zed:getSquare()
-
+    if zed:isDead() then return end
     if not sq then return end
     if MuleZed.getContObj(sq) ~= nil then return end
     

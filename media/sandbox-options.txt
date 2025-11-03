@@ -1,1 +1,14 @@
+
 VERSION = 1,
+
+option MuleZed.isDropOnGround
+{
+	type = boolean, default = false,
+	page = MuleZed, translation = MuleZed_isDropOnGround,
+}
+
+option MuleZed.immortal
+{
+	type = boolean, default = false,
+	page = MuleZed, translation = MuleZed_immortal,
+}

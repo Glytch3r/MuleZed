@@ -18,7 +18,6 @@
 
 MuleZed = MuleZed or {}
 
---[[ 
 function MuleZed.hit(zed, pl, bodyPartType, wpn)
 	if zed and MuleZed.isMuleZed(zed) then
         local immortal = SandboxVars.MuleZed.immortal or true 
@@ -29,7 +28,9 @@ function MuleZed.hit(zed, pl, bodyPartType, wpn)
 end
 Events.OnHitZombie.Remove(MuleZed.hit)
 Events.OnHitZombie.Add(MuleZed.hit)
- ]]
+
+
+
 function MuleZed.dead(zed)
     if instanceof(zed, "IsoZombie") and MuleZed.isMuleZed(zed) then
         local sq = zed:getSquare()
@@ -44,7 +45,11 @@ function MuleZed.dead(zed)
             for i = cont:getItems():size() - 1, 0, -1 do
                 local item = cont:getItems():get(i)
                 if item then
-                    sq:AddWorldInventoryItem(item, 0.5, 0.5, 0)
+                    if SandboxVars.MuleZed.isDropOnGround then
+                        sq:AddWorldInventoryItem(item, 0.5, 0.5, 0)
+                    else
+                        zed:getInventory():AddItem(item)
+                    end
                     cont:Remove(item)
                 end
             end
@@ -53,8 +58,10 @@ function MuleZed.dead(zed)
         ISInventoryPage.renderDirty = true
     end
 end
+
 Events.OnCharacterDeath.Remove(MuleZed.dead)
 Events.OnCharacterDeath.Add(MuleZed.dead)
+
 
 ----------------------------------------------------------------
 ----- ▄   ▄   ▄▄▄   ▄   ▄   ▄▄▄     ▄      ▄   ▄▄▄▄  ▄▄▄▄  -----

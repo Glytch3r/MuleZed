@@ -1,3 +1,8 @@
 Sandbox_EN = {
+	Sandbox_MuleZed = "Mule Zed",
+	Sandbox_MuleZed_isDropOnGround = "Drop On Ground",
+	Sandbox_MuleZed_isDropOnGround_tooltip = "Drop Items On The Ground When Mule Zed Dies",
+	Sandbox_MuleZed_immortal = "Immortal",
+	Sandbox_MuleZed_immortal_tooltip = "Players Cannot Attack Mule Zeds",
 
 }
