@@ -121,10 +121,11 @@ function MuleZed.stepContForZed(zed)
     if not oldCont then return end
     
     local newObj, newCont = MuleZed.setMuleObj(sq)
-    if not newObj or not newCont then return end
+    if newCont then 
+        MuleZed.transferItems(oldCont, newCont)
+        MuleZed.doSledge(oldObj)
+    end
 
-    MuleZed.transferItems(oldCont, newCont)
-    MuleZed.doSledge(oldObj)
 
    
 end
@@ -148,16 +149,15 @@ function MuleZed.stepCont(origSq, destSq)
 end
 
 function MuleZed.doSledge(obj)
-    if not obj then return end
-    if isClient() then
-        sledgeDestroy(obj)
-    else
-        local sq = obj:getSquare()
-        if sq then
-            sq:RemoveTileObject(obj)        
-            sq:getObjects():remove(obj)
-            sq:transmitRemoveItemFromSquare(obj)
-        end
-    end
-    ISInventoryPage.renderDirty = true
-end
+		if isClient() then
+			sledgeDestroy(obj)
+		else
+			local sq = obj:getSquare()
+			if sq then
+				sq:RemoveTileObject(obj);
+				sq:getSpecialObjects():remove(obj);
+				sq:getObjects():remove(obj);
+				sq:transmitRemoveItemFromSquare(obj)
+			end
+		end
+	end
