@@ -67,20 +67,6 @@ function MuleZed.followMaster(zed)
     MuleZed.followPlayerStep(zed, pl)
 end
 
-function MuleZed.stepContForZed(zed)
-    if not zed or zed:isDead() then return end
-    local sq = zed:getSquare()
-    if not sq then return end
-    local obj = MuleZed.findClosestMuleObj(sq)
-    if not obj then return end
-    local oldSq = obj:getSquare()
-    if oldSq ~= sq then
-        local newObj = MuleZed.stepCont(oldSq, sq)
-        if newObj then
-            MuleZed.transferItems(obj, newObj)
-        end
-    end
-end
 
 function MuleZed.coreFunc(zed)
     if not zed or not MuleZed.isMuleZed(zed) then return end
@@ -104,26 +90,6 @@ Events.OnZombieUpdate.Add(MuleZed.coreFunc)
 -----------------------            ---------------------------
 
 ---------------------------
---[[ 
-function MuleZed.hit(zed, pl, bodyPartType, wpn)
-    local immortal = SandboxVars.MuleZed.immortal or true 
-	zed:setImmortalTutorialZombie(immortal)
-	zed:setNoDamage(immortal)
-	zed:setAvoidDamage(true)
-	if zed and MuleZed.isMuleZed(zed) then
-		zed:setVariable("HitReaction", "HeadLeft")
-		if MuleZed.WasHurt ~= nil then return end	
-		MuleZed.sayMsg(zed, "hurt")		
-		MuleZed.WasHurt = true
 
-		MuleZed.pause(10, function()
-			MuleZed.WasHurt = false
-		end)
 
-	end
-end
-Events.OnHitZombie.Remove(MuleZed.hit)
-Events.OnHitZombie.Add(MuleZed.hit)
-
- ]]
 -----------------------            ---------------------------

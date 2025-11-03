@@ -38,20 +38,28 @@ function MuleZed.doBehavior(zed)
         MuleZed.doFollow(zed, pl)
     end
 end
-
+ 
 function MuleZed.doFollow(zed, pl)
-    pl = pl or getPlayer() 
-    if not pl then return end 
+    pl = pl or getPlayer()
+    if not pl or not zed then return end
 
-    local sq = MuleZed.getTargPlSq(pl)
-    if not sq then return end 
+    local px, py, pz = pl:getX(), pl:getY(), pl:getZ()
+    local zx, zy, zz = zed:getX(), zed:getY(), zed:getZ()
+    if zz ~= pz then return end
 
-    zed:faceLocation(sq:getX(), sq:getY());
-    if zed:getSquare() ~= pl:getSquare() then
+    local distSq = zed:DistToSquared(px, py)
+    local isPathing = zed:getVariableBoolean("bPathfind")
+
+    if distSq > 9 and not isPathing then
+        local sq = MuleZed.getTargPlSq(pl)
+        if not sq then return end
+        zed:faceLocation(sq:getX(), sq:getY())
         zed:pathToLocation(sq:getX(), sq:getY(), sq:getZ())
-    end
-    if zed:getZ() == sq:getZ() then
         zed:setVariable("bPathfind", true)
+        zed:setVariable("bMoving", true)
+    elseif distSq <= 9 and isPathing then
+        zed:getPathFindBehavior2():cancel()
+        zed:setVariable("bPathfind", false)
         zed:setVariable("bMoving", false)
     end
 end
@@ -96,17 +104,6 @@ function MuleZed.getMuleZed(x, y, z)
     return MuleZed.getMuleZedFromSq(sq)
 end
 
-function MuleZed.followMe(zed)
-    if not MuleZed.isMuleZed(zed) then return end
-    local pl = getPlayer()
-    if not pl then return end
-    local x, y, z = pl:getX(), pl:getY(), pl:getZ()
-    zed:setX(x)
-    zed:setY(y)
-    zed:setZ(z)
-    zed:setLx(x)
-    zed:setLy(y)
-end
 
 function MuleZed.faceTarget(zed, targ)
     if not zed or not targ then return end
@@ -116,3 +113,5 @@ function MuleZed.faceTarget(zed, targ)
     end
     zed:faceLocation(targ:getX(), targ:getY())
 end
+
+

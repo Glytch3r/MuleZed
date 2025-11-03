@@ -101,12 +101,10 @@ function MuleZed.Context(plNum, context, worldobjects)
 			data.AutoFollow = not data.AutoFollow
 		end)
 	else
-		local csq = pl:getCurrentSquare()
-		if not csq then return end
-		local zed2 = csq:getZombie()
-		if zed2 and zed2:isBeingSteppedOn() then
+		local zed2 = MuleZed.getZedToSlave(pl)
+		if zed2 then
 			local optTip = context:addOptionOnTop("Enslave", worldobjects, function()
-				if zed2 and zed2:isBeingSteppedOn() then
+				if zed2 and MuleZed.getZedToSlave(pl) == zed2 then
 					MuleZed.doEnslave(zed2)
 					context:hideAndChildren()
 				end
@@ -125,14 +123,16 @@ end
 Events.OnFillWorldObjectContextMenu.Remove(MuleZed.Context)
 Events.OnFillWorldObjectContextMenu.Add(MuleZed.Context)
 
-function MuleZed.doEnslave(zed)
-	local sq = zed:getSquare()
-	if not sq then return end
-	MuleZed.setMuleObj(sq)
-	zed:addVisualDamage("ZedDmg_MuleZed")
-	zed:resetModelNextFrame()
+function MuleZed.getZedToSlave(pl)
+	pl = pl or getPlayer()
+	local csq = pl:getCurrentSquare()
+	if not csq then return nil end
+	local zed = csq:getZombie()
+	if not zed then return nil end
+	if not zed:isBeingSteppedOn() then return nil end
+	if MuleZed.isMuleZed(zed) then return nil end
+	return zed
 end
-
 function MuleZed.canEnslave(pl)
 	if not pl then return false end
 	local wpn = pl:getPrimaryHandItem()
