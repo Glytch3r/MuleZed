@@ -76,9 +76,9 @@ function MuleZed.setMuleObj(sq)
     if not obj then return end
     obj:setIsContainer(true)
     sq:AddTileObject(obj)
-    obj:transmitCompleteItemToServer()
-    obj:transmitModData()
-    obj:transmitUpdatedSpriteToServer()
+    if isClient() then
+        obj:transmitCompleteItemToServer();
+    end
     ISInventoryPage.renderDirty = true
     return obj, obj:getContainer()
 end
@@ -98,22 +98,28 @@ function MuleZed.transferItems(srcCont, destCont)
 end
 
 function MuleZed.stepContForZed(zed)
-    if not zed  then return end
+    if not zed then return end
     local sq = zed:getSquare()
     if not sq then return end
-    local obj = MuleZed.findMuleObj(sq)
-    if not obj then 
-       obj = MuleZed.setMuleObj(sq)
+
+    local oldObj = MuleZed.findMuleObj(sq)
+    if not oldObj then return end
+
+    local oldSq = oldObj:getSquare()
+    if not oldSq or oldSq == sq then return end
+
+    local oldCont = oldObj:getContainer()
+    local newObj, newCont = MuleZed.setMuleObj(sq)
+    if not newObj or not newCont then return end
+
+    if oldCont then
+        MuleZed.transferItems(oldCont, newCont)
+        MuleZed.doSledge(oldObj)
     end
-    if not obj then return end
-    local oldSq = obj:getSquare()
-    if not oldSq then return end
- 
-    local newObj = MuleZed.stepCont(oldSq, sq)
-    if newObj then
-        MuleZed.transferItems(obj, newObj)
-    end
+
+   
 end
+
 function MuleZed.stepCont(origSq, destSq)
     if not origSq or not destSq then return end
     local oldObj = MuleZed.getContObj(origSq)
@@ -128,7 +134,7 @@ function MuleZed.stepCont(origSq, destSq)
         MuleZed.transferItems(oldCont, newCont)
     end
     MuleZed.doSledge(oldObj)
-    newObj:transmitCompleteItemToServer()
+
     ISInventoryPage.renderDirty = true
 end
 
@@ -144,4 +150,5 @@ function MuleZed.doSledge(obj)
             sq:transmitRemoveItemFromSquare(obj)
         end
     end
+    ISInventoryPage.renderDirty = true
 end
